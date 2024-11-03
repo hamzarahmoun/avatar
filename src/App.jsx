@@ -1,13 +1,22 @@
-import React from 'react'
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
 
-const App = () => {
+function App() {
   return (
-    <div>
-      <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
-    </div>
-  )
+    <>
+      <Canvas
+        camera={{
+          position: [3, 3, 3],
+        }}
+      >
+<OrbitControls/>
+        <mesh>
+          <boxGeometry args={[1, 1, 1]} />
+          <meshNormalMaterial /> 
+        </mesh>
+      </Canvas>
+    </>
+  );
 }
 
-export default App
+export default App;
