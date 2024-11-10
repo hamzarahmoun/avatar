@@ -8,7 +8,7 @@ const DownloadButton = () => {
       </button>
     );
   };
-  import { logo } from "../images";
+  import { logo } from "../Images";
 
 export const UI = () => {
     return (
