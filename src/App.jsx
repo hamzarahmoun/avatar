@@ -2,10 +2,12 @@ import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import React from 'react'
 import { BoxGeometry } from 'three';
+import { UI } from './components/UI';
 
 const App = () => {
   return (
     <>
+    <UI />
       <Canvas
         camera={{
           position: [3, 3, 3],
