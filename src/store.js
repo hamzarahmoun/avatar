@@ -1,7 +1,6 @@
 import { create } from 'zustand'
-import PocketBase from 'pocketbase';
 
-const pb = import.meta.env.VITE_POCKETBASE_API_KEY;
+const pb = import.meta.env.VITE_POCKETBASE;
 if (!pb) {
     throw new Error('PocketBase API key is required');
 }
