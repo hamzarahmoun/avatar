@@ -10,7 +10,7 @@ const DownloadButton = () => {
             Download
         </button>
     );
-};
+
 
 const AssetsBox = () => {
     const {
