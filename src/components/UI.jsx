@@ -1,5 +1,6 @@
-
-import { useConfiguratorStore } from "../store.js";
+import { logo } from "../images/index.js";
+import { useEffect } from "react";
+import { pb,useConfiguratorStore } from "../store.js";
 const DownloadButton = () => {
     return (
         <button
@@ -10,8 +11,7 @@ const DownloadButton = () => {
         </button>
     );
 };
-import { logo } from "../Images";
-import { useEffect } from "react";
+
 const AssetsBox = () => {
     const {
         categories,
@@ -22,17 +22,17 @@ const AssetsBox = () => {
         customization,
         lockedGroups,
     } = useConfiguratorStore();
-    useEffect(() => { fetchCategories }, []);
+useEffect(() => { fetchCategories() }, []);
     return (
-        <div className="md:rounded-t-lg bg-gradient-to-br from-black/30 to-indigo-900/20  backdrop-blur-sm drop-shadow-md flex flex-col py-6 gap-3 overflow-hidden ">
-            <div className="flex items-center gap-8 pointer-events-auto noscrollbar overflow-x-auto px-6 pb-2">
+        <div className="rounded-2xl bg-white drop-shadow-md p-6 gap-6 flex flex-col">
+            <div className="flex items-center gap-6 pointer-events-auto ">
                 {categories.map((category) => (
 
                     <button
                         key={category.id}
                         onClick={() => setCurrentCategory(category)}
                         className={`transition-colors duration-200 font-medium  
-                            ${currentCategory === category.name
+                            ${currentCategory?.name === category.name
                                 ? "text-indigo-500"
                                 : "text-gray-500 hover:text-gray-700"
                             }`}
@@ -40,8 +40,27 @@ const AssetsBox = () => {
 
                         {category.name}
                     </button>
+
                 ))}
+                <div className="flex gap-2 overflow-x-auto noscrollbar px-6">
+                    {currentCategory?.assets.map((asset) => (
+                        <button
+                            key={asset.thumbnail}
+                            onClick={() => changeAsset(currentCategory.name, asset)}
+                            className={`w-20 h-20  flex-shrink-0 rounded-xl overflow-hidden pointer-events-auto 
+                                hover:opacity-100 transition-all border-2 duration-300
+              bg-gradient-to-tr                                `} 
+                        >
+                            <img
+                                className="object-cover w-full h-full"
+                                src={pb.files.getUrl(asset, asset.thumbnail)}
+                                />
+                        </button>
+                    ))}
+                </div>
+
             </div>
+
         </div>
     );
 };
@@ -56,7 +75,7 @@ export const UI = () => {
                     >
                         <img className="w-20" src={logo} />
                     </a>
-                        <DownloadButton />
+                    <DownloadButton />
                 </div>
                 <div className="flex flex-col gap-6">
                     <AssetsBox />
