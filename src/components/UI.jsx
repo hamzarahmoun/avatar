@@ -1,4 +1,4 @@
-import { logo } from "../images/index.js";
+import { logo } from "../Images/index.js";
 import { useEffect } from "react";
 import { pb, useConfiguratorStore } from "../store.js";
 const DownloadButton = () => {

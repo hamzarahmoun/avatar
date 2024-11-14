@@ -3,7 +3,7 @@ import { useGLTF } from '@react-three/drei';
 
 export const Avatar = ({...props}) => {
   const group = useRef();
-  const { nodes } = useGLTF("/src/models/Armature.glb");
+  const { nodes } = useGLTF("/src/Models/Armature.glb");
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
