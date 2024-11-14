@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import React from 'react'
 import { BoxGeometry } from 'three';
 import { UI } from './components/UI';
+import Experiences from './components/Experiences';
 
 const App = () => {
   return (
@@ -14,11 +15,7 @@ const App = () => {
           fov: 45,
         }}
       >
-        <OrbitControls />
-        <mesh>
-          <boxGeometry args={[0.5, 0.5, 0.5]} />
-          <meshNormalMaterial />
-        </mesh>
+        <Experiences />
         <color attach="background" args={["#130f30"]} />
       </Canvas>
     </>
