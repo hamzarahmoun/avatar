@@ -11,12 +11,16 @@ const App = () => {
     <UI />
       <Canvas
         camera={{
-          position: [3, 3, 3],
+          position: [-1, 1, 5],
           fov: 45,
         }}
       >
-        <Experiences />
         <color attach="background" args={["#130f30"]} />
+        <fog attach="fog" args={["#130f30", 10, 40]} />
+        <group>
+        <Experiences />
+
+        </group>
       </Canvas>
     </>
   );
