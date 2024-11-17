@@ -14,6 +14,10 @@ const App = () => {
           position: [-1, 1, 5],
           fov: 45,
         }}
+        gl={{
+          preserveDrawingBuffer: true,
+        }}
+        shadows
       >
         <color attach="background" args={["#130f30"]} />
         <fog attach="fog" args={["#130f30", 10, 40]} />

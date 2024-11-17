@@ -10,7 +10,9 @@ if (!pb) {
     throw new Error('PocketBase API key is required');
 }
 
+
 export const useConfiguratorStore = create((set) => ({
+  
     categories: [],
     currentCategory: null,
     assets: [],
@@ -27,9 +29,15 @@ export const useConfiguratorStore = create((set) => ({
         const customization = {};
         categories.forEach((category) => {
             category.assets = assets.filter((asset) => asset.group === category.id);
-            customization[category.name]
+            customization[category.name]={}
+            if (category.assetStarting) {
+              customization[category.name].asset = category.assets.find(
+                (asset) => asset.id === category.assetStarting
+              );
+            }
           });
-        set({ categories, currentCategory: categories[0], assets,customization,        });
+        set({ categories, currentCategory: categories[0], assets,customization});
+        
     },
     
     setCurrentCategory: (category) => set({ currentCategory: category }),
