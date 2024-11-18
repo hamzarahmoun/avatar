@@ -2,7 +2,7 @@ import { Suspense, useEffect, useRef } from 'react';
 import { useAnimations, useGLTF } from '@react-three/drei';
 import { pb, useConfiguratorStore } from '../store';
 import { Asset } from "./Asset";
-import { GLTFExporter } from 'three/examples/jsm/Addons.js';
+import { GLTFExporter } from 'three-stdlib';
 
 export const Avatar = ({ ...props }) => {
   const group = useRef();
@@ -15,13 +15,13 @@ export const Avatar = ({ ...props }) => {
   useEffect(() => {
     function download() {
       const exporter = new GLTFExporter();
-      exporter.parse(group.current, (result) => {
+      exporter.parse(group.current, function (result) {
         save(
-          new Blob([result], { type: "application/octet-stream" })
+          new Blob([result], { type: "application/octet-stream" }),
             `avatar_${+new Date()}.glb`,
         )
       },
-         (error) => {
+         function (error)  {
           console.log(error);
         },
         { binary: true }
@@ -36,7 +36,7 @@ export const Avatar = ({ ...props }) => {
       link.click();
     };
     setDownload(download);
-  }, []);
+  }, [setDownload]);
   useEffect(() => {
     actions["mixamo.com"]?.play();
   }, [actions]);

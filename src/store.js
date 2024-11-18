@@ -18,6 +18,8 @@ export const useConfiguratorStore = create((set) => ({
     assets: [],
     customization: {},
     download: () => {},
+    setDownload: (download) => set({ download }),
+
     fetchCategories: async () => {
         // you can also fetch all records at once via getFullList
         const categories = await pb.collection('CustomizationGroups').getFullList({
@@ -52,7 +54,6 @@ export const useConfiguratorStore = create((set) => ({
           },
         }));
       },
-      setDownload: (download) => set({ download }),
 
 
 }))
