@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import PocketBase from "pocketbase";
+import { MeshStandardMaterial } from 'three';
 const pocketBaseUrl = import.meta.env.VITE_POCKETBASE_URL;
 if (!pocketBaseUrl) {
     throw new Error("VITE_POCKETBASE_URL is required");
@@ -11,12 +12,14 @@ if (!pb) {
 }
 
 
-export const useConfiguratorStore = create((set) => ({
+export const useConfiguratorStore = create((set,get) => ({
   
     categories: [],
     currentCategory: null,
     assets: [],
     customization: {},
+    skin: new MeshStandardMaterial({ color: 0xf5c6a5, roughness: 1 }),
+
     download: () => {},
     setDownload: (download) => set({ download }),
     updateColor: (color)=>{
@@ -29,7 +32,12 @@ export const useConfiguratorStore = create((set) => ({
         },
       }
       }))
-     
+      if (get().currentCategory.name === "Head") {
+        get().updateSkin(color);
+      }
+    },
+    updateSkin: (color) => {
+      get().skin.color.set(color);
     },
     fetchCategories: async () => {
         // you can also fetch all records at once via getFullList
