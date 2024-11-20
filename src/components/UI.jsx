@@ -1,6 +1,7 @@
 import { logo } from "../Images/index.js";
 import { useEffect } from "react";
 import { pb, useConfiguratorStore } from "../store.js";
+import { Color } from "three";
 const DownloadButton = () => {
    const download = useConfiguratorStore((state) => state.download); 
     return (
@@ -20,23 +21,23 @@ const AssetsBox = () => {
         fetchCategories,
         setCurrentCategory,
         changeAsset,
-        customization,
+        customization, 
         lockedGroups,
     } = useConfiguratorStore();
 
     useEffect(() => { fetchCategories() }, []);
 
     return (
-        <div className="rounded-2xl bg-white drop-shadow-md p-6 gap-6 flex flex-col">
-            <div className="flex items-center gap-6 pointer-events-auto ">
+        <div className="rounded-t-lg bg-gradient-to-br drop-shadow-md py-6 gap-3 flex flex-col from-black/30 to-indigo-900/20 backdrop-blur-sm">
+            <div className="flex items-center gap-8 pointer-events-auto overflow-x-auto px-6 pb-2 noscrollbar">
                 {categories?.map((category) => (
                     <button
-                        key={category.id}
+                        key={category.id} 
                         onClick={() => setCurrentCategory(category)}
-                        className={`transition-colors duration-200 font-medium  
+                        className={`transition-colors duration-200 font-medium flex-shrink-0 border-b
                             ${currentCategory?.name === category.name
-                                ? "text-indigo-500"
-                                : "text-gray-500 hover:text-gray-700"
+                                ? "text-white shadow-purple-100 border-b-white"
+                                : "text-gray-500 hover:text-gray-500 border-b-transparent"
                             }`}
                     >
                         {category.name}
@@ -56,6 +57,7 @@ const AssetsBox = () => {
                         `}
                     >
                         <img
+                        className="object-cover w-full h-full"
                             src={pb.files.getUrl(asset, asset.thumbnail)}
                         />
                     </button>
@@ -66,6 +68,8 @@ const AssetsBox = () => {
 };
 
 export const UI = () => {
+    const currentCategory = useConfiguratorStore((state) => state.currentCategory);
+    const customization = useConfiguratorStore((state) => state.customization);
     return (
         <main className="pointer-events-none fixed z-10 inset-0 select-none" >
             <div className="mx-auto h-full max-w-screen-xl w-full flex flex-col justify-between">
@@ -78,10 +82,50 @@ export const UI = () => {
                     </a>
                     <DownloadButton />
                 </div>
-                <div className="flex flex-col gap-6">
+                <div className="px-10 flex flex-col">
+                    {currentCategory?.colorPalette &&
+                    customization[currentCategory.name] && <ColorPicker/>
+                    }
                     <AssetsBox />
                 </div>
             </div>
         </main>
     );
 }
+
+const ColorPicker = () => {
+    const updateColor = useConfiguratorStore((state) => state.updateColor);
+    const currentCategory = useConfiguratorStore(
+      (state) => state.currentCategory
+    );
+    const handleColorChange = (color) => {
+      updateColor(color);
+    };
+    const customization = useConfiguratorStore((state) => state.customization);
+  
+    if (!customization[currentCategory.name]?.asset) {
+      return null;
+    }
+    return (
+      <div className="pointer-events-auto relative flex gap-2 max-w-full overflow-x-auto backdrop-blur-sm py-2 drop-shadow-md noscrollbar px-2 md:px-0">
+        {currentCategory.expand?.colorPalette?.colors.map((color, index) => (
+          <button
+            key={`${index}-${color}`}
+            className={`w-10 h-10 p-1.5 drop-shadow-md bg-black/20 shrink-0 rounded-lg overflow-hidden transition-all duration-300 border-2
+               ${
+                 customization[currentCategory.name].color === color
+                   ? "border-white"
+                   : "border-transparent"
+               }
+            `}
+            onClick={() => handleColorChange(color)}
+          >
+            <div
+              className="w-full h-full rounded-md"
+              style={{ backgroundColor: color }}
+            />
+          </button>
+        ))}
+      </div>
+    );
+  };
