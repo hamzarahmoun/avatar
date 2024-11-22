@@ -67,7 +67,16 @@ const AssetsBox = () => {
                         {category.name}
                     </button>
                 ))}
+
             </div>
+            {lockedGroups[currentCategory?.name] && (
+        <p className="text-red-400 px-6">
+          Asset is hidden by{" "}
+          {lockedGroups[currentCategory.name]
+            .map((asset) => `${asset.name} (${asset.categoryName})`)
+            .join(", ")}
+        </p>
+      )}
             <div className="flex gap-2 flex-row">
                 {currentCategory?.removable && (
                     <button
