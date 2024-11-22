@@ -6,6 +6,8 @@ export const Asset = ({ url, categoryName, skeleton }) => {
   const { scene } = useGLTF(url);
 
 const customization = useConfiguratorStore((state) => state.customization);
+const lockedGroups = useConfiguratorStore((state) => state.lockedGroups);
+
 const assetColor = customization[categoryName].color ;
   const skin = useConfiguratorStore((state) => state.skin);
   useEffect(() => {
@@ -31,11 +33,13 @@ const assetColor = customization[categoryName].color ;
           morphTargetDictionary: child.morphTargetDictionary,
           morphTargetInfluences: child.morphTargetInfluences,
         });
-      }
+      } 
     });
     return items;
   }, [scene]);
-
+  if (lockedGroups[categoryName]) {
+    return null;
+  }
   return attachedItems.map((item, index) => (
     <skinnedMesh
       key={index}

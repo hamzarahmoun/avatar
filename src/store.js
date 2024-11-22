@@ -19,6 +19,8 @@ export const useConfiguratorStore = create((set,get) => ({
     currentCategory: null,
     assets: [],
     customization: {},
+    lockedGroups: {},
+
     skin: new MeshStandardMaterial({ color: 0xf5c6a5, roughness: 1 }),
 
     download: () => {},
@@ -75,7 +77,10 @@ export const useConfiguratorStore = create((set,get) => ({
               asset,
             },
           },
+          
         }));
+        get().applyLockedAssets();
+
       },
       randomize: () => {
         const customization = {};
@@ -99,6 +104,36 @@ export const useConfiguratorStore = create((set,get) => ({
           }
         });
         set({ customization });
+        get().applyLockedAssets();
+
+      },
+
+      applyLockedAssets: () => {
+        const customization = get().customization;
+        const categories = get().categories;
+        const lockedGroups = {};
+    
+        Object.values(customization).forEach((category) => {
+          if (category.asset?.lockedGroups) {
+            category.asset.lockedGroups.forEach((group) => {
+              const categoryName = categories.find(
+                (category) => category.id === group
+              ).name;
+              if (!lockedGroups[categoryName]) {
+                lockedGroups[categoryName] = [];
+              }
+              const lockingAssetCategoryName = categories.find(
+                (cat) => cat.id === category.asset.group
+              ).name;
+              lockedGroups[categoryName].push({
+                name: category.asset.name,
+                categoryName: lockingAssetCategoryName,
+              });
+            });
+          }
+        });
+    
+        set({ lockedGroups });
       },
 
 }))
