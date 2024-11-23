@@ -1,18 +1,12 @@
 import { Environment, OrbitControls, SoftShadows } from '@react-three/drei';
 import React from 'react';
 import { Avatar } from "./Avatar";
+import { CameraManager } from './CameraManager';
 
 const Experiences = () => {
   return (
     <>
-    
-      <OrbitControls
-      minPolarAngle={Math.PI / 4}
-      maxPolarAngle={Math.PI / 2}
-      minAzimuthAngle={-Math.PI / 4}
-      maxAzimuthAngle={Math.PI / 4}
-      
-      />
+    <CameraManager />
 
       <SoftShadows size={52} samples={16} focus={0.5} />
       <Environment preset="sunset" environmentIntensity={0.3} />
