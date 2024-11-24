@@ -46,7 +46,7 @@ export const useConfiguratorStore = create((set,get) => ({
         // you can also fetch all records at once via getFullList
         const categories = await pb.collection('CustomizationGroups').getFullList({
             sort: '+position',
-            expand: 'colorPalette',
+            expand: 'colorPalette,cameraPlacement',
         });
         const assets = await pb.collection('CustomizationAssets').getFullList({
             sort: '-created',
