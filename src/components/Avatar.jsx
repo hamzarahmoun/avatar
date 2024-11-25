@@ -43,7 +43,7 @@ export const Avatar = ({ ...props }) => {
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
-        <group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={0.007}>
+        <group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={0.004}>
           <primitive object={nodes.mixamorigHips} />
           {Object.keys(customization).map(
             (key) =>

@@ -7,7 +7,10 @@ const Experiences = () => {
   return (
     <>
     <CameraManager />
-
+    <mesh receiveShadow rotation-x={-Math.PI / 2} position-y={-0.31}>
+        <planeGeometry args={[100, 100]} />
+        <meshStandardMaterial color="#333" roughness={0.85} />
+      </mesh>
       <SoftShadows size={52} samples={16} focus={0.5} />
       <Environment preset="sunset" environmentIntensity={0.3} />
       {/* Key Light */}

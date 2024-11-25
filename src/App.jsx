@@ -4,6 +4,7 @@ import React from 'react'
 import { BoxGeometry } from 'three';
 import { UI } from './components/UI';
 import Experiences from './components/Experiences';
+import { DEFAULT_CAMERA_POSITION } from './components/CameraManager';
 
 const App = () => {
   return (
@@ -11,7 +12,7 @@ const App = () => {
     <UI />
       <Canvas
         camera={{
-          position: [-1, 1, 5],
+          position: DEFAULT_CAMERA_POSITION,
           fov: 45,
         }}
         gl={{
@@ -21,7 +22,7 @@ const App = () => {
       >
         <color attach="background" args={["#130f30"]} />
         <fog attach="fog" args={["#130f30", 15, 25]} />
-        <group position-y={-0.8}>
+        <group position-y={-0.2}>
         <Experiences />
 
         </group>
