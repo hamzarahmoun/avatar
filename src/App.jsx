@@ -5,11 +5,13 @@ import { BoxGeometry } from 'three';
 import { UI } from './components/UI';
 import Experiences from './components/Experiences';
 import { DEFAULT_CAMERA_POSITION } from './components/CameraManager';
+import { Leva } from 'leva';
 
 const App = () => {
   return (
     <>
     <UI />
+    <Leva hidden/>
       <Canvas
         camera={{
           position: DEFAULT_CAMERA_POSITION,

@@ -8,6 +8,7 @@ export const Avatar = ({ ...props }) => {
   const group = useRef();
   const { nodes } = useGLTF("/Models/Armature.glb");
   const { animations } = useGLTF("/Models/Poses.glb");
+  const pose = useConfiguratorStore((state) => state.pose);
 
   const customization = useConfiguratorStore((state) => state.customization);
   const { actions } = useAnimations(animations, group);
@@ -38,8 +39,10 @@ export const Avatar = ({ ...props }) => {
     setDownload(download);
   }, [setDownload]);
   useEffect(() => {
-    actions["mixamo.com"]?.play();
-  }, [actions]);
+    actions[pose]?.fadeIn(0.2).play();
+    return () => actions[pose]?.fadeOut(0.2).stop();
+  }, [actions, pose]);
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">

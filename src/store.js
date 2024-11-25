@@ -6,6 +6,16 @@ const pocketBaseUrl = import.meta.env.VITE_POCKETBASE_URL;
 if (!pocketBaseUrl) {
     throw new Error("VITE_POCKETBASE_URL is required");
   }
+
+  export const PHOTO_POSES = {
+    Idle: "Idle",
+    Chill: "Chill",
+    Cool: "Cool",
+    Punch: "Punch",
+    Ninja: "Ninja",
+    King: "King",
+    Busy: "Busy",
+  };
 export const pb = new PocketBase(pocketBaseUrl);
 pb.autoCancellation(false); // Disable auto-cancellation
 if (!pb) {
@@ -14,7 +24,8 @@ if (!pb) {
 
 
 export const useConfiguratorStore = create((set,get) => ({
-  
+  pose: PHOTO_POSES.Ninja,
+  setPose: (pose) => set({ pose }),
     categories: [],
     currentCategory: null,
     assets: [],
