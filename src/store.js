@@ -16,6 +16,10 @@ if (!pocketBaseUrl) {
     King: "King",
     Busy: "Busy",
   };
+  export const UI_MODES = {
+    PHOTO: "photo",
+    CUSTOMIZE: "customize",
+  };
 export const pb = new PocketBase(pocketBaseUrl);
 pb.autoCancellation(false); // Disable auto-cancellation
 if (!pb) {
@@ -24,8 +28,14 @@ if (!pb) {
 
 
 export const useConfiguratorStore = create((set,get) => ({
-  pose: PHOTO_POSES.Ninja,
   setPose: (pose) => set({ pose }),
+  mode: UI_MODES.CUSTOMIZE,
+  setMode: (mode) => {
+    set({ mode });
+    if (mode === UI_MODES.CUSTOMIZE) {
+      set({ pose: PHOTO_POSES.Idle });
+    }
+  },
     categories: [],
     currentCategory: null,
     assets: [],

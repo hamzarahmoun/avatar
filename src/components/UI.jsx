@@ -1,7 +1,8 @@
 import { logo } from "../Images/index.js";
 import { useEffect } from "react";
-import { pb, useConfiguratorStore } from "../store.js";
 import { Color } from "three";
+import { pb, PHOTO_POSES, UI_MODES, useConfiguratorStore } from "../store";
+
 const DownloadButton = () => {
     const download = useConfiguratorStore((state) => state.download);
     return (
@@ -13,30 +14,52 @@ const DownloadButton = () => {
         </button>
     );
 };
+
+const PosesBox = () => {
+    const curPose = useConfiguratorStore((state) => state.pose);
+    const setPose = useConfiguratorStore((state) => state.setPose);
+    return (
+        <div className="pointer-events-auto md:rounded-t-lg bg-gradient-to-br from-black/30 to-indigo-900/20  backdrop-blur-sm drop-shadow-md flex p-6 gap-3 overflow-x-auto noscrollbar">
+            {Object.keys(PHOTO_POSES).map((pose) => (
+                <button
+                key={pose}
+                    className={`transition-colors duration-200 font-medium flex-shrink-0 border-b ${curPose === PHOTO_POSES[pose]
+                        ? "text-white shadow-purple-100 border-b-white"
+                        : "text-gray-200 hover:text-gray-100 border-b-transparent"
+                        }
+         `}
+                    onClick={() => setPose(PHOTO_POSES[pose])}
+                >
+                    {pose}
+                </button>
+            ))}
+        </div>
+    );
+};
 const RandomizeButton = () => {
     const randomize = useConfiguratorStore((state) => state.randomize);
     return (
-      <button
-        className="rounded-lg bg-indigo-500 hover:bg-indigo-600 transition-colors duration-300 text-white font-medium px-4 py-3 pointer-events-auto drop-shadow-md"
-        onClick={randomize}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-6"
+        <button
+            className="rounded-lg bg-indigo-500 hover:bg-indigo-600 transition-colors duration-300 text-white font-medium px-4 py-3 pointer-events-auto drop-shadow-md"
+            onClick={randomize}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3"
-          />
-        </svg>
-      </button>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+            >
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3"
+                />
+            </svg>
+        </button>
     );
-  };
+};
 
 const AssetsBox = () => {
     const {
@@ -70,13 +93,13 @@ const AssetsBox = () => {
 
             </div>
             {lockedGroups[currentCategory?.name] && (
-        <p className="text-red-400 px-6">
-          Asset is hidden by{" "}
-          {lockedGroups[currentCategory.name]
-            .map((asset) => `${asset.name} (${asset.categoryName})`)
-            .join(", ")}
-        </p>
-      )}
+                <p className="text-red-400 px-6">
+                    Asset is hidden by{" "}
+                    {lockedGroups[currentCategory.name]
+                        .map((asset) => `${asset.name} (${asset.categoryName})`)
+                        .join(", ")}
+                </p>
+            )}
             <div className="flex gap-2 flex-row">
                 {currentCategory?.removable && (
                     <button
@@ -124,7 +147,7 @@ const AssetsBox = () => {
                         />
                     </button>
                 ))}
-                
+
             </div>
         </div>
     );
@@ -133,6 +156,8 @@ const AssetsBox = () => {
 export const UI = () => {
     const currentCategory = useConfiguratorStore((state) => state.currentCategory);
     const customization = useConfiguratorStore((state) => state.customization);
+    const mode = useConfiguratorStore((state) => state.mode);
+    const setMode = useConfiguratorStore((state) => state.setMode);
     return (
         <main className="pointer-events-none fixed z-10 inset-0 select-none" >
             <div className="mx-auto h-full max-w-screen-xl w-full flex flex-col justify-between">
@@ -150,10 +175,40 @@ export const UI = () => {
                     </div>
                 </div>
                 <div className="px-10 flex flex-col">
-                    {currentCategory?.colorPalette &&
-                        customization[currentCategory.name] && <ColorPicker />
-                    }
-                    <AssetsBox />
+
+                    {mode === UI_MODES.CUSTOMIZE && (
+                        <>
+                            {currentCategory?.colorPalette &&
+                                customization[currentCategory.name] && <ColorPicker />}
+                            <AssetsBox />
+                        </>
+                    )}
+                    {mode === UI_MODES.PHOTO && <PosesBox />}
+                    <div className="flex justify-stretch">
+                        <button
+                            className={`flex-1 pointer-events-auto  p-4 text-white transition-colors duration-200 font-medium
+                ${mode === UI_MODES.CUSTOMIZE
+                                    ? "bg-indigo-500/90"
+                                    : "bg-indigo-500/30 hover:bg-indigo-500/50"
+                                }
+              `}
+                            onClick={() => setMode(UI_MODES.CUSTOMIZE)}
+                        >
+                            Customize avatar
+                        </button>
+                        <div className="w-px bg-white/30"></div>
+                        <button
+                            className={`flex-1 pointer-events-auto p-4 text-white transition-colors duration-200 font-medium
+                ${mode === UI_MODES.PHOTO
+                                    ? "bg-indigo-500/90"
+                                    : "bg-indigo-500/30 hover:bg-indigo-500/50"
+                                }
+                `}
+                            onClick={() => setMode(UI_MODES.PHOTO)}
+                        >
+                            Photo booth
+                        </button>
+                    </div>
                 </div>
             </div>
         </main>
