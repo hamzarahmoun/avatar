@@ -28,6 +28,7 @@ if (!pb) {
 
 
 export const useConfiguratorStore = create((set,get) => ({
+  loading: true,
   setPose: (pose) => set({ pose }),
   mode: UI_MODES.CUSTOMIZE,
   setMode: (mode) => {
@@ -86,7 +87,7 @@ export const useConfiguratorStore = create((set,get) => ({
               );
             }
           });
-        set({ categories, currentCategory: categories[0], assets,customization});
+        set({ categories, currentCategory: categories[0], assets,customization, loading: false,});
         
     },
     
