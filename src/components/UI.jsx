@@ -1,4 +1,4 @@
-import { logo } from "../Images/index.js";
+import { logo } from "/public/Images/index.js";
 import { useEffect } from "react";
 import { Color } from "three";
 import { pb, PHOTO_POSES, UI_MODES, useConfiguratorStore } from "../store";
@@ -197,7 +197,7 @@ export const UI = () => {
                     }`}
             >
                 <img
-                    src="/src/Images/logo.svg"
+                    src={logo}
                     className="w-40 animate-pulse"
                 />
             </div>
