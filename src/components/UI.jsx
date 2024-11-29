@@ -197,7 +197,7 @@ export const UI = () => {
                     }`}
             >
                 <img
-                    src={logo}
+                    src='/public/Images/logo1.png'
                     className="w-40 animate-pulse"
                 />
             </div>
@@ -207,7 +207,7 @@ export const UI = () => {
                         className="pointer-events-auto"
                         href="/"
                     >
-                        <img className="w-20" src={logo} />
+                        <img className="w-20" src='/public/Images/logo1.png'/>
                     </a>
                     <div className="flex items-center gap-4">
                         <RandomizeButton />

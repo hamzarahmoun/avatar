@@ -24,7 +24,7 @@ const Experiences = () => {
 
       // Create an image element for the logo
       const logo = new Image();
-      logo.src = {logo};
+      logo.src = '/public/Images/logo1.png';
       logo.crossOrigin = "anonymous";
       logo.onload = () => {
         // Draw the logo onto the overlay canvas

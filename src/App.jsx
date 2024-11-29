@@ -24,7 +24,7 @@ const App = () => {
       >
         <color attach="background" args={["#130f30"]} />
         <fog attach="fog" args={["#130f30", 15, 25]} />
-        <group position-y={-0.2}>
+        <group position-y={-0.005}>
         <Experiences />
 
         </group>
