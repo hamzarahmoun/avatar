@@ -4,7 +4,7 @@ import { Avatar } from "./Avatar";
 import { CameraManager } from './CameraManager';
 import { useConfiguratorStore } from '../store';
 import { useThree } from '@react-three/fiber';
-import { logo } from "/public/Images/index.js";
+import { logo1 } from "/public/Images/index.js";
 
 const Experiences = () => {
   const setScreenshot = useConfiguratorStore((state) => state.setScreenshot);
@@ -24,7 +24,7 @@ const Experiences = () => {
 
       // Create an image element for the logo
       const logo = new Image();
-      logo.src = '/public/Images/logo1.png';
+      logo.src = {logo1};
       logo.crossOrigin = "anonymous";
       logo.onload = () => {
         // Draw the logo onto the overlay canvas

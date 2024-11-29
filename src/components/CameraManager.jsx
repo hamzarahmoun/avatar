@@ -9,13 +9,13 @@ export const DEFAULT_CAMERA_POSITION = [-1, 1, 5];
 export const DEFAULT_CAMERA_TARGET = [0, 0, 0];
 
 export const CameraManager = ({loading}) => {
+  const controls = useRef();
   const currentCategory = useConfiguratorStore(
     (state) => state.currentCategory
   );
   const mode = useConfiguratorStore((state) => state.mode);
   const initialLoading = useConfiguratorStore((state) => state.loading);
 
-    const controls = useRef();
     useControls({
         getCameraPosition: button(() => {
           console.log("Camera Position", [...controls.current.getPosition()]);

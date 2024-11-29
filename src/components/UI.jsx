@@ -1,4 +1,4 @@
-import { logo } from "/public/Images/index.js";
+import { logo1 } from "/public/Images/index.js";
 import { useEffect } from "react";
 import { Color } from "three";
 import { pb, PHOTO_POSES, UI_MODES, useConfiguratorStore } from "../store";
@@ -197,7 +197,7 @@ export const UI = () => {
                     }`}
             >
                 <img
-                    src='/public/Images/logo1.png'
+                    src={logo1}
                     className="w-40 animate-pulse"
                 />
             </div>
@@ -207,7 +207,7 @@ export const UI = () => {
                         className="pointer-events-auto"
                         href="/"
                     >
-                        <img className="w-20" src='/public/Images/logo1.png'/>
+                        <img className="w-20" src={logo1}/>
                     </a>
                     <div className="flex items-center gap-4">
                         <RandomizeButton />
